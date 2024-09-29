@@ -104,10 +104,14 @@ async function updateRoleAttributes(nome = "", parte = "", descrizione = "", id)
     return getRuoloById(id)
 }
 
+// Funzione per eliminare un ruolo dato l'idq
+async function deleteRuoloById(id){
+    pool.query("DELETE FROM ruoli WHERE id = ?", [id])
+}
 
 export default {
     newUtente, getUtenteById, getUtenteByUsername, getUtenti, updateAuthStatus, getRuoli,
-    createRuolo, getRuoloById, getRuoloByName, updateRoleAttributes
+    createRuolo, getRuoloById, getRuoloByName, updateRoleAttributes, deleteRuoloById
 };
 
 

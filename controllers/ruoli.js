@@ -8,7 +8,7 @@ const getRoles = async (req, res) => {
 
     // Controllo se esistono dei ruoli nel database
     if(roles.length === 0){
-        return res.status(404).json({succes: false, message: "Nessun ruolo presente nel database"})
+        return res.status(404).json({success: false, message: "Nessun ruolo presente nel database"})
     }
 
     // Creo un array di ruoli. Uso la funzione map per poter mappare ogni ruolo ottenuto dalla chiamata alla funzione 'getRuoli' all'array ruoli.
@@ -61,7 +61,24 @@ const updateAttributes = async (req, res) => {
     return res.status(200).json({success: true, message: "Informazioni aggiornate", role: result})
 }
 
+const deleteRuolo = async (req, res) =>{
+    // Ottengo l'id dall'url della chiamata all'API
+    const { id }  = req.params
+
+    // Controllo se il ruolo esiste
+    const ruolo = await db.getRuoloById(id)
+    if(ruolo.length === 0){
+        return res.status(404).json({success: false, message: "Ruolo non presente nel database"})
+    }
+
+    // Elimino il ruolo usando la funzione 'deleteRuoloById()' presente nel file database.js
+    await db.deleteRuoloById(id)
+
+    // Ottengo la nuova lista di ruoli usando la funzione 'getRuoli()' presente nel file database.js
+    const NewListRuoli = await db.getRuoli()
+    return res.status(200).json({success: true, message: "Ruolo eliminato correttamente", roles: NewListRuoli})
+}
 
 
 
-export default {getRoles, newRuolo, updateAttributes};
+export default {getRoles, newRuolo, updateAttributes, deleteRuolo};

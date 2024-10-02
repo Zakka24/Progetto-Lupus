@@ -1,6 +1,5 @@
 // Tutto il codice che collega il server all'app
 import mysql from 'mysql2'
-import api from './controllers/ruoli.js'
 
 import dotenv from 'dotenv'
 dotenv.config(); 

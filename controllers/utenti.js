@@ -1,4 +1,4 @@
-import db from '../database.js'; // Query/funzioni varie
+import db from '../database.js';  // Query/funzioni varie
 
 
 // Ritorna una lista di tutti gli utenti presenti nel database

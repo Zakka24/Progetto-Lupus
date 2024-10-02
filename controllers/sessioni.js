@@ -1,4 +1,5 @@
 import db from '../database.js'; 
+import { io } from '../webSocket/socket.js' // Importa la logica WebSocket
 
 const creaNuovaSessione = async (req, res) => {
     try{
@@ -31,7 +32,14 @@ const creaNuovaSessione = async (req, res) => {
         }
 
         // L'admin crea la sessione: 
-        await db.adminCreaSessione(admin_id);
+        const newSession = await db.adminCreaSessione(admin_id);
+
+        // Emetti un evento WebSocket per notificare tutti gli utenti autenticati
+        io.emit('new-session-available', {
+            sessionId: newSession.id,
+            adminId: admin_id,
+            ruoliSelezionati: ruoliSelezionati
+        })
 
         return res.status(201).json({success: true, message: "Sessione creata correttamente"})
     }

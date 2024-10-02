@@ -104,19 +104,73 @@ async function updateRoleAttributes(nome = "", parte = "", descrizione = "", id)
     return getRuoloById(id)
 }
 
-// Funzione per eliminare un ruolo dato l'idq
+// Funzione per eliminare un ruolo dato l'id
 async function deleteRuoloById(id){
     pool.query("DELETE FROM ruoli WHERE id = ?", [id])
 }
 
+// Funzione per creare una nuova sessione con ruoli assegnati
+async function creaSessione(adminId, ruoliSelezionati, utentiConnessi) {
+    // Crea la sessione
+    const [result] = await pool.query("INSERT INTO sessioni (admin_id) VALUES (?)", [adminId]);
+    const sessioneId = result.insertId;
+
+    // Assegna i ruoli agli utenti connessi
+    if (utentiConnessi.length !== ruoliSelezionati.length) {
+        throw new Error('Il numero di ruoli selezionati non corrisponde al numero di utenti connessi.');
+    }
+
+    // Assegna ciascun ruolo a ciascun utente
+    for (let i = 0; i < utentiConnessi.length; i++) {
+        const utenteId = utentiConnessi[i].id;
+        const ruoloId = ruoliSelezionati[i];
+
+        // Inserisci nella tabella ruoli_assegnati
+        await pool.query(
+            "INSERT INTO ruoli_assegnati (sessione_id, utente_id, ruolo_id) VALUES (?, ?, ?)", 
+            [sessioneId, utenteId, ruoloId]
+        );
+    }
+}
+// Funzione per ottenere solo gli utenti autenticati (quelli connessi)
+async function getUtentiInSessione(){
+    const [utenti] = await pool.query("SELECT * FROM utenti, sessioni WHERE utenti.sessione_id = sessioni.sessione_id");
+    return utenti;
+}
+
+// Ritorna i dettagli della sessione creata, dato l'id
+async function getSessioneById(sessioneId){
+    const [sessione] = await  pool.query("SELECT * FROM sessioni WHERE id = ?", [sessioneId])
+    return sessione
+}
+
+// Ritorna i dettagli della sessione creata, dato l'id
+async function getSessioni(){
+    const [sessioni] = await  pool.query("SELECT * FROM sessioni")
+    return sessioni
+}
+
+// L'admin che una sessione
+async function adminCreaSessione(adminId){
+    const [result] = await pool.query("INSERT INTO sessioni (admin_id) VALUES (?)", [adminId])
+    const sessioneId = result.insertId;
+    return result
+}
+
+async function updateSessioneEntraUtente(id_sessione, id_utente){
+    const [result] = await pool.query("UPDATE utenti SET sessione_id = ? WHERE id = ?", [id_sessione, id_utente])
+    return getUtenteById(id_utente)
+}
+
+async function updateSessioneEsceUtente(id_utente){
+    const [result] = await pool.query("UPDATE utenti SET sessione_id = 0 WHERE id = ?", [id_utente])
+    return getUtenteById(id_utente)
+}
+
+
 export default {
     newUtente, getUtenteById, getUtenteByUsername, getUtenti, updateAuthStatus, getRuoli,
-    createRuolo, getRuoloById, getRuoloByName, updateRoleAttributes, deleteRuoloById
-};
-
-
-
-
-
-
-
+    createRuolo, getRuoloById, getRuoloByName, updateRoleAttributes, deleteRuoloById,
+    creaSessione, getSessioneById, getUtentiInSessione, adminCreaSessione, updateSessioneEntraUtente, 
+    updateSessioneEsceUtente, getSessioni
+}

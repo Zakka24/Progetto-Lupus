@@ -5,6 +5,7 @@ import { tokenChecker} from './tokenChecker.js'
 import routerAuth from './routes/autenticazione.js'
 import routerUsers from './routes/utenti.js'
 import routerRoles from './routes/ruoli.js'
+import routerSessione from './routes/sessioni.js';
  
 
 const app = express();
@@ -24,6 +25,9 @@ app.use('api/auth/logout', tokenChecker);
 // Utenti: '/api/users' è il prefisso per tutte le rotte per gli user
 app.use('/api/users', routerUsers)
 
-// Utenti: '/api/roles' è il prefisso per tutte le rotte per i ruoli
+// Ruoli: '/api/roles' è il prefisso per tutte le rotte per i ruoli
 app.use('/api/roles', routerRoles)
+
+// Sessioni: '/api/sessions' è il prefisso per tutte le rotte per le sessioni
+app.use('/api/sessions', routerSessione)
 

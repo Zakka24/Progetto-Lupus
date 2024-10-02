@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken' // Libreria per creare il token
 import bcrypt from 'bcrypt'; // libreria per hashare la password
 import db from '../database.js'; 
-
+import { io } from '../webSocket/index.js' // Importa la logica WebSocket
 
 // API per creare un nuovo utente (registrazione)
 const register = async (req, res) => {
@@ -63,6 +63,9 @@ const login = async (req, res) => {
 
         // Aggiorno lo stato_autenticato dell'utente a true e ritorno la risposta
         await db.updateAuthStatus(username);
+
+        // Invia un evento WebSocket quando l'utente si autentica
+        io.emit('user-logged-in', {username}); 
         return res.status(200).json({
             success: true, 
             message: "Benvenuto nel tuo account, " + username + "!", 
@@ -78,7 +81,7 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
     try{
         // Ottengo username dell'utente dall'url della chiamata dell'API
-        let username = req.params.username
+        let { username } = req.params
 
         // Ottengo il token dall'header della chiamata
         let tkn = req.headers['x-access-token'];
@@ -89,6 +92,10 @@ const logout = async (req, res) => {
             let options = {expiresIn: 5};
             let tkn = jwt.sign(payload, process.env.SECRET_KEY, options);
             await db.updateAuthStatus(username, tkn);
+
+            // Invia un evento WebSocket quando l'utente esegue il logout
+            io.emit('user-logged-out', { username })
+
             return res.status(200).json({success: true, message: "Logout eseguito correttamente"});
         }
         // Se il token non esiste ritorno un errore

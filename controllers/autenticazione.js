@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken' // Libreria per creare il token
 import bcrypt from 'bcrypt'; // libreria per hashare la password
 import db from '../database.js'; 
-import { io } from '../webSocket/index.js' // Importa la logica WebSocket
+import { io } from '../webSocket/socket.js' // Importa la logica WebSocket
 
 // API per creare un nuovo utente (registrazione)
 const register = async (req, res) => {

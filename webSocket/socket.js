@@ -1,8 +1,3 @@
-// index.js
-import { handleAuthentication } from './handlers/authenticationHandler.js';
-import { handleRoleAssignment } from './handlers/roleAssignmentHandler.js';
-import { handleConnection } from './handlers/connectionHandler.js';
-
 import { Server } from 'socket.io';
 
 let io;

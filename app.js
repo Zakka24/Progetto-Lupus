@@ -1,7 +1,6 @@
 import express from 'express';
 import http from 'http' // import per creare il server HTTP
-import { Server } from 'socket.io' 
-import { initializeWebSocket } from './webSocket/index.js';  // Importa la logica WebSocket
+import { initializeWebSocket } from './webSocket/socket.js';  // Importa la logica WebSocket
 
 // import delle routes da ./routes
 import routerAuth from './routes/autenticazione.js'

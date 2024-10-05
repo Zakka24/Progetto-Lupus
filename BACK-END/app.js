@@ -16,7 +16,7 @@ const app = express();
 const server = http.createServer(app)
 
 app.use(express.json())
-app.use(express.static('client'));
+// app.use(express.static('client'));
 //app.use(tokenChecker)
 
 // Inizializza WebSocket

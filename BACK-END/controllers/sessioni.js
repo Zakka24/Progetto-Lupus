@@ -1,6 +1,7 @@
 import db from '../database.js'; 
 import { io } from '../webSocket/socket.js' // Importa la logica WebSocket
 
+// Crea una nuova sessione di gioco
 const creaNuovaSessione = async (req, res) => {
     try{
         // Ottengo id e gli id dei ruoli scelti rispettivamente dall'url alla chiamata dell'API e dal body

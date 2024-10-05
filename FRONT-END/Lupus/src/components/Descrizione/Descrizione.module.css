@@ -1,0 +1,28 @@
+.descrizioneContainer {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  .descrizioneContainer h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .descrizioneContainer p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  .descrizioneContainer ul {
+    margin-left: 20px;
+  }
+  
+  .descrizioneContainer li {
+    font-size: 16px;
+    color: #555;
+  }

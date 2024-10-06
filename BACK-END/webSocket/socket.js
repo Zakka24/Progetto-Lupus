@@ -3,7 +3,13 @@ import { Server } from 'socket.io';
 let io;
 
 export const initializeWebSocket = (server) => {
-    io = new Server(server);
+    io = new Server(server, {
+        cors: {
+            origin: 'http://127.0.0.1:5173', // Consenti richieste dall'origine del front-end
+            methods: ['GET', 'POST'], // Metodi consentiti
+            credentials: true, // Se devi gestire i cookie o altre credenziali
+        }
+    });
 
     io.on('connection', (socket) => {
         console.log(`Utente connesso: ${socket.id}`);

@@ -21,6 +21,7 @@ app.use(express.json());
 app.use(cors({
   origin: 'http://127.0.0.1:5173', // Origine consentita
   methods: ['GET', 'POST', 'PATCH', 'DELETE'], // Metodi HTTP consentiti
+  credentials: true // Per gestire i cookie o altre credenziali
 }));
 
 // Inizializza WebSocket
@@ -33,12 +34,18 @@ server.listen(8080, () => {
 
 // Autenticazione: '/api/auth' è il prefisso per tutte le rotte di autenticazione
 app.use('/api/auth', routerAuth);
+app.use('api/auth/logout', tokenChecker)
 
 // Utenti: '/api/users' è il prefisso per tutte le rotte per gli user
 app.use('/api/users', routerUsers);
 
 // Ruoli: '/api/roles' è il prefisso per tutte le rotte per i ruoli
-app.use('/api/roles', routerRoles);
+app.use('/api/roles', routerRoles); // Ottenere tutti i ruoli
+app.use('/api/roles/new-role', tokenChecker); // Creare un nuovo ruolo
+app.use('/api/roles/:id', tokenChecker); // Aggiornare un attributo di un ruolo o eliminarlo
 
 // Sessioni: '/api/sessions' è il prefisso per tutte le rotte per le sessioni
-app.use('/api/sessions', routerSessione);
+app.use('/api/sessions', routerSessione); // Ottenere info di una sessione/tutte le sessioni
+app.use('/api/sessions/new-session/:admin_id', tokenChecker); // Creare una nuova sessione
+app.use('/api/sessions/entra-sessione/id_utente/id_sessione', tokenChecker); // Entrare in una sessione
+app.use('/api/sessions/esce-sessione/id_utente/', tokenChecker); // Uscire da una sessione

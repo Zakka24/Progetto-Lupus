@@ -1,55 +1,84 @@
 /* Stili generali dell'header */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #2c3e50;
-    color: white;
-  }
-  
-  .logoContainer {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo {
-    width: 75;
-    height: 50px;
-    margin-right: 10px;
-  }
-  
-  .appName {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .navLinks {
-    display: flex;
-    gap: 50px;
-  }
-  
-  .navLink {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-  }
-  
-  .navLink:hover {
-    text-decoration: underline;
-  }
-  
-  .signInButton {
-    background-color: #2980b9;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .signInButton:hover {
-    background-color: #3498db;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #2c3e50;
+  color: white;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 75px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.appName {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.navLinks {
+  display: flex;
+  gap: 50px;
+}
+
+.navLink {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.navLink:hover {
+  text-decoration: underline;
+}
+
+.signInButton {
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.signInButton:hover {
+  background-color: #3498db;
+}
+
+/* Stile per la sezione dell'utente loggato */
+.userSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Stile per il nome utente visualizzato */
+.username {
+  font-size: 15px;
+  font-weight: bold;
+  color: #ecf0f1;
+}
+
+/* Stile per il pulsante di logout */
+.logoutButton {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.logoutButton:hover {
+  background-color: #c0392b;
+}

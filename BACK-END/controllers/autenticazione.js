@@ -56,6 +56,8 @@ const login = async (req, res) => {
             return res.status(400).json({success: false, message: "Password errata"})
         }
 
+        const userData = Array.isArray(user) ? user[0] : user;
+
         // Creo il token
         let payload = {username: username};
         let options = {expiresIn: 23200};
@@ -69,7 +71,8 @@ const login = async (req, res) => {
         return res.status(200).json({
             success: true, 
             message: "Benvenuto nel tuo account, " + username + "!", 
-            token: tkn
+            token: tkn,
+            user: {id: userData.id}
         });
     }
     catch(error){

@@ -1,0 +1,52 @@
+/* File: Sessions.css */
+
+.sessionsContainer {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.sessionsList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sessionItem {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+.sessionItem p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.loading {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #888;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+
+.noSessions {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #777;
+}
+  

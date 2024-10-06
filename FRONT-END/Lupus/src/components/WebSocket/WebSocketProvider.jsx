@@ -9,7 +9,7 @@ export const WebSocketProvider = ({ children }) => {
 
     useEffect(() => {
         // Connessione al server WebSocket
-        const socketIo = io('http://localhost:8080');  // Assicurati che l'URL corrisponda al tuo server
+        const socketIo = io('http://localhost:8080/');  // Assicurati che l'URL corrisponda al tuo server
         
         // Salva il socket nello stato
         setSocket(socketIo);

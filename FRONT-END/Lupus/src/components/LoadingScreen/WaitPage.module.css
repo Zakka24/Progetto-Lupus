@@ -55,8 +55,6 @@ p {
   background-color: #0056b3;
 }
 
-/* File: LoadingScreen.module.css */
-
 .loadingContainer {
   display: flex;
   flex-direction: column;

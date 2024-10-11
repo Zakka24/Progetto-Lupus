@@ -153,7 +153,7 @@ async function getSessioni(){
 async function adminCreaSessione(adminId){
     const [result] = await pool.query("INSERT INTO sessioni (admin_id) VALUES (?)", [adminId])
     const sessioneId = result.insertId;
-    return result
+    return getSessioneById(sessioneId)
 }
 
 async function updateSessioneEntraUtente(id_sessione, id_utente){

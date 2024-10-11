@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt'; // libreria per hashare la password
 import db from '../database.js'; 
 import { io } from '../webSocket/socket.js' // Importa la logica WebSocket
 
+// ALL DONE
+
 // API per creare un nuovo utente (registrazione)
 const register = async (req, res) => {
     try{
@@ -66,13 +68,14 @@ const login = async (req, res) => {
         // Aggiorno lo stato_autenticato dell'utente a true e ritorno la risposta
         await db.updateAuthStatus(username);
 
-        // Invia un evento WebSocket quando l'utente si autentica
-        io.emit('user-logged-in', {username}); 
+        // Invia un messaggio WebSocket al client autenticato
+        io.to(req.socket.id).emit('auth-success', { username });
+
         return res.status(200).json({
             success: true, 
             message: "Benvenuto nel tuo account, " + username + "!", 
             token: tkn,
-            user: {id: userData.id}
+            user: {id: userData.id, username: userData.username}
         });
     }
     catch(error){
@@ -87,17 +90,14 @@ const logout = async (req, res) => {
         let { username } = req.params
 
         // Ottengo il token dall'header della chiamata
-        let tkn = req.headers['x-access-token'];
+        let tkn = req.headers['authorization'];
 
         // Se il token esiste, allora lo elimino e aggiorno lo stato_autenticato dell'utente a false. Ritorno la risposta
         if(tkn){
             let payload = {};
-            let options = {expiresIn: 5};
+            let options = {expiresIn: 1};
             let tkn = jwt.sign(payload, process.env.SECRET_KEY, options);
             await db.updateAuthStatus(username, tkn);
-
-            // Invia un evento WebSocket quando l'utente esegue il logout
-            io.emit('user-logged-out', { username })
 
             return res.status(200).json({success: true, message: "Logout eseguito correttamente"});
         }

@@ -35,14 +35,7 @@ const creaNuovaSessione = async (req, res) => {
         // L'admin crea la sessione: 
         const newSession = await db.adminCreaSessione(admin_id);
 
-        // Emetti un evento WebSocket per notificare tutti gli utenti autenticati
-        io.emit('new-session-available', {
-            sessionId: newSession.id,
-            adminId: admin_id,
-            ruoliSelezionati: ruoliSelezionati
-        })
-
-        return res.status(201).json({success: true, message: "Sessione creata correttamente"})
+        return res.status(201).json({success: true, message: "Sessione creata correttamente", sessione: newSession})
     }
     catch(error){
         return res.status(500).json({success: false, message: "Errore del server", error: error.message})
@@ -69,7 +62,7 @@ const utenteEntraInSessione = async (req, res) => {
         // Aggiorno l'attributo 'sessione_id' dell'utente
         await db.updateSessioneEntraUtente(id_sessione, id_utente)
 
-        return res.status(200).json({success: true, message: "Attributo sessione correttamente aggiornato"})
+        return res.status(200).json({success: true, message: "Attributo sessione correttamente aggiornato"}, )
     }
     catch(error){
         return res.status(500).json({success: false, message: "Errore del server", error: error.message})

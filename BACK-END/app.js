@@ -34,7 +34,7 @@ server.listen(8080, () => {
 
 // Autenticazione: '/api/auth' è il prefisso per tutte le rotte di autenticazione
 app.use('/api/auth', routerAuth);
-app.use('api/auth/logout', tokenChecker)
+app.use('api/auth/logout/:username', tokenChecker)
 
 // Utenti: '/api/users' è il prefisso per tutte le rotte per gli user
 app.use('/api/users', routerUsers);

@@ -95,6 +95,18 @@ const deleteRuolo = async (req, res) =>{
     }
 }
 
+const getRuolo = async(req, res) => {
+    const { id } = req.params;
+
+    const ruolo = await db.getRuoloById(id);
+
+    if(ruolo.length === 0){
+        return res.status(404).json({success: false, message: "Ruolo non presente nel database"})
+    }
+
+    return res.status(200).json({success: true, message: "Ruolo trovato", ruolo: ruolo})
+}
 
 
-export default {getRoles, newRuolo, updateAttributes, deleteRuolo};
+
+export default {getRoles, newRuolo, updateAttributes, deleteRuolo, getRuolo};

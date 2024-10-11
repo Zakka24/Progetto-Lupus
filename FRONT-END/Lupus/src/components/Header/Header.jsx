@@ -1,64 +1,83 @@
-import React, { useContext, useEffect } from 'react';
-import { WebSocketContext } from '../WebSocket/WebSocketProvider';  // Importa il contesto WebSocket
-import { useNavigate } from 'react-router-dom';  // Importa useNavigate per il reindirizzamento
-import logo from './logo_lupus.jpeg';
+import React, { useContext } from 'react';
+import { WebSocketContext } from '../WebSocket/WebSocketProvider';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 
-function Header() {
-  const { socket, user, setUser } = useContext(WebSocketContext);  // Ottieni socket e user dal contesto
-  const navigate = useNavigate();  // Usa useNavigate per il reindirizzamento
+function Header({ menuOpen, setMenuOpen }) {  // Riceve menuOpen e setMenuOpen come props
+  const { socket } = useContext(WebSocketContext);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (socket) {
-      // Ascolta gli eventi WebSocket per login/logout
-      socket.on('user-logged-in', (data) => {
-        console.log(`${data.username} ha effettuato il login.`);
-      });
-
-      socket.on('user-logged-out', (data) => {
-        console.log(`${data.username} ha effettuato il logout.`);
-      });
-
-      socket.on('new-session-available', (data) => {
-        console.log('Nuova sessione disponibile: ', data);
-      });
-    }
-  }, [socket]);
+  // console.log(sessionStorage.getItem('token'))
+  // console.log(sessionStorage.getItem('userID'))
 
   const handleSignInClick = () => {
-    navigate('/login');  // Reindirizza alla pagina di login
+    navigate('/login');
   };
 
-  const handleLogout = () => {
-    // Invia evento di logout tramite WebSocket
-    socket.emit('user-logged-out', { username: user });
-    setUser(null);  // Rimuovi l'utente loggato dallo stato
-    navigate('/');  // Reindirizza alla homepage dopo il logout
+  const handleLogout = async () => {
+    try {
+      let token = sessionStorage.getItem('token');
+      const username = sessionStorage.getItem('username');
+      const response = await fetch('http://localhost:8080/api/auth/logout/' + username, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        const username = sessionStorage.getItem('username');
+        sessionStorage.clear();
+
+        if (socket) {
+          socket.emit('user-logged-out', username);
+        }
+
+        // Reindirizza alla homepage
+        navigate('/');
+      } else {
+        throw new Error(data.message || 'Logout fallito');
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+  
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);  // Usa setMenuOpen per aprire/chiudere il menu
   };
 
   return (
     <header className={styles.header}>
       <div className={styles.logoContainer}>
-        <img src={logo} alt="Logo Lupus" className={styles.logo}/>
+        <img src="logo_lupus.jpeg" alt="Logo Lupus" className={styles.logo} />
       </div>
-      <nav className={styles.navLinks}>
-        <a href="/" className={styles.navLink}>Homepage</a>
-        <a href="/sessions" className={styles.navLink}>Sessioni</a>
-        <a href="/roles" className={styles.navLink}>Vedi i ruoli</a>
-      </nav>
+      <button className={styles.hamburger} onClick={toggleMenu}>
+        &#9776; {/* Icona hamburger */}
+      </button>
 
-      {user ? (
+      <nav className={`${styles.navLinks} ${menuOpen ? styles.showMenu : ''}`}>
+        <Link to="/" className={styles.navLink}>Homepage</Link>
+        <Link to="/sessions" className={styles.navLink}>Sessioni</Link>
+        <Link to="/roles" className={styles.navLink}>Vedi i ruoli</Link>
         <div className={styles.userSection}>
-          <span className={styles.username}>{user}</span>
-          <button className={styles.logoutButton} onClick={handleLogout}>
-            Logout
-          </button>
+          {sessionStorage.getItem('username') ? (
+            <>
+              <span className={styles.username}>{sessionStorage.getItem('username')}</span>
+              <button className={styles.logoutButton} onClick={handleLogout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <button className={styles.signInButton} onClick={handleSignInClick}>
+              Sign-in
+            </button>
+          )}
         </div>
-      ) : (
-        <button className={styles.signInButton} onClick={handleSignInClick}>
-          Sign-in
-        </button>
-      )}
+      </nav>
     </header>
   );
 }

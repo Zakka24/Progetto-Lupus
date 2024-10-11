@@ -6,6 +6,7 @@
   padding: 10px 20px;
   background-color: #2c3e50;
   color: white;
+  position: relative; /* Necessario per posizionare il menu hamburger */
 }
 
 .logoContainer {
@@ -19,20 +20,32 @@
   margin-right: 10px;
 }
 
-.appName {
-  font-size: 24px;
-  font-weight: bold;
+/* Stile per il pulsante hamburger */
+.hamburger {
+  display: none; /* Di default nascosto su desktop */
+  font-size: 30px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
+/* Stile per il menu di navigazione */
 .navLinks {
   display: flex;
-  gap: 50px;
+  gap: 0px; /* Modificato per ridurre il gap tra i link */
+  transition: max-height 0.3s ease-out;
+  flex: 1;
+  justify-content: space-between; /* Distribuisce gli spazi */
+  align-items: center; /* Allinea verticalmente i contenuti */
 }
 
 .navLink {
   color: white;
   text-decoration: none;
   font-size: 18px;
+  flex: 1; /* Permette di distribuire gli spazi tra i link */
+  text-align: center; /* Centra i link nel menu */
 }
 
 .navLink:hover {
@@ -56,19 +69,17 @@
 /* Stile per la sezione dell'utente loggato */
 .userSection {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 10px; /* Maggiore distanza tra username e pulsante */
+  margin-left: auto; /* Spinge la sezione dell'utente a destra */
 }
 
-/* Stile per il nome utente visualizzato */
 .username {
   font-size: 15px;
   font-weight: bold;
   color: #ecf0f1;
 }
 
-/* Stile per il pulsante di logout */
 .logoutButton {
   background-color: #e74c3c;
   color: white;
@@ -81,4 +92,48 @@
 
 .logoutButton:hover {
   background-color: #c0392b;
+}
+
+/* --- MEDIA QUERIES --- */
+
+/* Stile per schermi piccoli (mobile) */
+/* MEDIA QUERIES - Stile per schermi piccoli (mobile) */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block; /* Mostra l'hamburger su mobile */
+  }
+
+  .navLinks {
+    position: absolute;
+    top: 60px; /* Posizionamento sotto l'header */
+    left: 0;
+    width: 100%;
+    background-color: #2c3e50;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 0; /* Nascondiamo il menu */
+    overflow: hidden;
+  }
+
+  .showMenu {
+    max-height: 300px; /* Mostra il menu quando aperto */
+  }
+
+  .navLink {
+    padding: 10px;
+    font-size: 16px;
+    text-align: center; /* Centra i link nel menu */
+  }
+
+  .signInButton, .logoutButton {
+    width: 100%; /* I pulsanti occupano tutta la larghezza */
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .userSection {
+    width: 100%;
+    align-items: center;
+    padding: 10px;
+  }
 }

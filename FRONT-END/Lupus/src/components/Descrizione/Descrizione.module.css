@@ -1,28 +1,46 @@
 .descrizioneContainer {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    border-radius: 8px;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  transition: margin-top 0.3s ease; /* Transizione fluida quando si apre il menu */
+}
+
+.descrizioneContainer h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.descrizioneContainer p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.descrizioneContainer ul {
+  margin-left: 20px;
+}
+
+.descrizioneContainer li {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Responsività per schermi piccoli */
+@media (max-width: 768px) {
+  .descrizioneContainer {
+    margin: 10px;
+    padding: 15px;
   }
-  
+
   .descrizioneContainer h2 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 15px;
+    font-size: 20px;
   }
-  
-  .descrizioneContainer p {
-    font-size: 16px;
-    color: #555;
-    line-height: 1.6;
-  }
-  
-  .descrizioneContainer ul {
-    margin-left: 20px;
-  }
-  
+
+  .descrizioneContainer p,
   .descrizioneContainer li {
-    font-size: 16px;
-    color: #555;
+    font-size: 14px;
   }
+}

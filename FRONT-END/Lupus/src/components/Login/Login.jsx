@@ -1,14 +1,15 @@
-// File: Login.jsx
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate per il reindirizzamento
 import styles from './Login.module.css';
 import Header from '../Header/Header';
+import { WebSocketContext } from '../WebSocket/WebSocketProvider'; // Importa il contesto WebSocket
 
-function Login() {
+function Login({ menuOpen, setMenuOpen }) {
   const [isLoginSlideUp, setIsLoginSlideUp] = useState(false); // Track login/signup state
   const [loading, setLoading] = useState(false); // Stato di caricamento
   const [error, setError] = useState(null); // Stato di errore
   const navigate = useNavigate(); // Hook per la navigazione
+  const { socket, setSocket } = useContext(WebSocketContext); // Usa il contesto WebSocket
 
   // Gestione del form di registrazione
   const handleSignupClick = () => {
@@ -37,11 +38,19 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        // Salva il token nel localStorage
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('userID', data.user.id)
-        navigate('/');
-      } else {
+
+        // Salva il token e le informazioni dell'utente nel sessionStorage
+        sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem('userID', data.user.id);
+        sessionStorage.setItem('username', data.user.username);
+        sessionStorage.removeItem('tempUserId');
+
+        const username = sessionStorage.getItem('username')
+
+        socket.emit('user-logged-in', username )
+        navigate('/'); // Reindirizza alla pagina di Homepage
+      } 
+      else {
         throw new Error(data.message || 'Login fallito');
       }
     } catch (error) {
@@ -93,7 +102,7 @@ function Login() {
   if (loading) {
     return (
       <>
-        <Header />
+        <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <div className={styles.loading}>Loading...</div>
       </>
     );
@@ -103,7 +112,7 @@ function Login() {
   if (error) {
     return (
       <>
-        <Header />
+        <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <div className={styles.error}>Error: {error}</div>
       </>
     );
@@ -112,7 +121,7 @@ function Login() {
   // Moduli di login e registrazione
   return (
     <>
-      <Header />
+      <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <div className={styles.container}>
         <div className={styles.formStructor}>
           {/* Modulo di registrazione */}

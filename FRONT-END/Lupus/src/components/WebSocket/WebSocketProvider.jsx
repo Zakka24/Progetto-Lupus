@@ -6,30 +6,51 @@ export const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
-  const [user, setUser] = useState(null);  // Stato per l'utente loggato
 
   useEffect(() => {
-    // Connessione al server WebSocket
-    const socketIo = io('http://localhost:8080/');  
-    setSocket(socketIo);
-
-    // Ascolta eventi di login/logout
-    socketIo.on('user-logged-in', (data) => {
-      setUser(data.username);  // Imposta l'utente loggato
-    });
-
-    socketIo.on('user-logged-out', () => {
-      setUser(null);  // Rimuovi l'utente al logout
-    });
-
-    // Pulizia: disconnessione del WebSocket al termine
-    return () => {
-      socketIo.disconnect();
-    };
-  }, []);
+    if (!socket) {
+      const token = sessionStorage.getItem('token');
+      const userId = sessionStorage.getItem('userID');
+      const username = sessionStorage.getItem('username');
+  
+      let tempUserId = sessionStorage.getItem('tempUserId');
+  
+      if (!token && !userId && !username && !tempUserId) {
+        tempUserId = `guest_${Math.random().toString(36).substr(2, 9)}`;
+        sessionStorage.setItem('tempUserId', tempUserId);
+      }
+  
+      try {
+        const socketIo = io('http://localhost:8080/', {
+          query: { token, tempUserId }
+        });
+  
+        setSocket(socketIo);
+  
+        socketIo.on('connect', () => {
+          console.log('WebSocket connesso: ', socketIo.id);
+        });
+  
+        socketIo.on('disconnect', (reason) => {
+          console.log('WebSocket disconnesso:', reason);
+        });
+  
+        socketIo.on('connect_error', (error) => {
+          console.error('Errore di connessione WebSocket:', error);
+        });
+      } catch (error) {
+        console.error('Errore durante la connessione al WebSocket:', error);
+      }
+  
+      return () => {
+        if (socket) socket.disconnect();
+      };
+    }
+  }, [socket]);
+  
 
   return (
-    <WebSocketContext.Provider value={{ socket, user, setUser }}>
+    <WebSocketContext.Provider value={{ socket, setSocket }}>
       {children}
     </WebSocketContext.Provider>
   );

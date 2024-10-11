@@ -3,7 +3,7 @@ import styles from './Descrizione.module.css';
 
 function Descrizione() {
   return (
-    <div className={styles.descrizioneContainer}>
+    <div className={`${styles.descrizioneContainer}`}>
       <h2>Regole del Gioco</h2>
       <p>
         Benvenuto nel gioco! Ecco alcune regole che dovrai seguire:

@@ -1,17 +1,20 @@
-/* File: Sessions.css */
-
+/* Stili di base */
 .sessionsContainer {
-    margin: 20px;
-    padding: 20px;
-    border-radius: 8px;
+    margin: 10px auto;
+    padding: 15px;
+    max-width: 100%;
     background-color: #f9f9f9;
+    border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
 }
 
 h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 .sessionsList {
@@ -21,32 +24,139 @@ h1 {
 
 .sessionItem {
     padding: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 6px;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.sessionItem:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 
 .sessionItem p {
-    margin: 5px 0;
+    margin: 8px 0;
     color: #555;
+    font-size: 0.95rem;
 }
 
-.loading {
+.sessionItem strong {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Stili per i pulsanti */
+button {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 10px 0;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.loadingSessioni, .loadingEntra {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: #888;
+    margin-top: 20px;
 }
 
-.error {
+.errorSessioni, .errorEntra {
     color: red;
     text-align: center;
+    font-size: 1rem;
+    margin-top: 20px;
 }
 
 .noSessions {
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #777;
+    margin-top: 20px;
 }
-  
+
+button.createSessionButton {
+    display: block;
+    margin: 15px auto;
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    max-width: 250px;
+}
+
+button.createSessionButton:hover {
+    background-color: #218838;
+}
+
+/* Media Queries per Mobile */
+@media (max-width: 768px) {
+    .sessionsContainer {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    .sessionItem {
+        padding: 10px;
+    }
+
+    .sessionItem p {
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    button.createSessionButton {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    .sessionItem {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+
+    button {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+
+    button.createSessionButton {
+        font-size: 0.85rem;
+    }
+}

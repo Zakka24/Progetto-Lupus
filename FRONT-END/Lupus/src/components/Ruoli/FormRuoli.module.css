@@ -1,0 +1,92 @@
+.formContainer {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .formGroup {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-left: 8px;
+  }
+  
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  input[type="text"]#roleSearch {
+    margin-bottom: 20px;
+    border-color: #007bff;
+  }
+  
+  .checkboxItem {
+    display: flex; /* Allinea gli elementi orizzontalmente */
+    align-items: center;
+    margin-bottom: 15px;
+
+  }
+  
+  input[type="checkbox"] {
+    margin-right: 10px; /* Spazio tra la checkbox e il nome del ruolo */
+  }
+  
+  .noResults {
+    color: #777;
+    font-size: 0.9rem;
+  }
+  
+  .submitButton {
+    margin: auto;
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .submitButton:hover {
+    background-color: #0056b3;
+  }
+
+  .loading{
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+    margin-top: 20px;
+}
+
+.error{
+    color: red;
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+.no {
+    text-align: center;
+    font-size: 1rem;
+    color: #777;
+    margin-top: 20px;
+}

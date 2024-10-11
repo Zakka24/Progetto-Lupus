@@ -38,14 +38,14 @@
   }
   
   .checkboxItem {
-    display: flex; /* Allinea gli elementi orizzontalmente */
+    display: flex; 
     align-items: center;
     margin-bottom: 15px;
 
   }
   
   input[type="checkbox"] {
-    margin-right: 10px; /* Spazio tra la checkbox e il nome del ruolo */
+    margin-right: 10px; 
   }
   
   .noResults {

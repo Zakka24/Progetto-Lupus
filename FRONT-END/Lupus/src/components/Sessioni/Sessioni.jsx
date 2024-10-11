@@ -12,7 +12,7 @@ function Sessioni({ menuOpen, setMenuOpen }) {
   const [loadingEntra, setloadingEntra] = useState();
   const [errorEntra, setErrorEntra] = useState(null);
 
-  const navigate = useNavigate(); // Hook per la navigazione
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchSessions = async () => {

@@ -1,39 +1,37 @@
-/* Stile generale delle card */
+
 .card {
     border: 1px solid hsl(0, 0%, 80%);
     border-radius: 10px;
     box-shadow: 5px 5px 5px hwb(0 0% 0% 0.1);
     margin: 10px;
     text-align: center;
-    width: 40%; /* Adattiamo la larghezza al 100% per mobile */
-    max-width: 300px; /* Limitiamo la larghezza massima su dispositivi più larghi */
-    height: auto; /* Rimuoviamo l'altezza fissa */
+    width: 40%; 
+    max-width: 300px; 
+    height: auto; 
     display: inline-block;
     overflow: hidden;
 }
 
-/* Immagini responsive */
+
 .cardImage {
-    width: 50%; /* Le immagini si adattano al 50% della larghezza della card */
+    width: 50%;
     height: auto;
     border-radius: 50%;
     margin-bottom: 10px;
 }
 
-/* Stile dei titoli */
 .cardTitle {
     font-family: Arial, sans-serif;
     margin: 8px;
     color: hsl(0% 0% 20%);
 }
 
-/* Stile del testo */
+
 .cardText {
     font-family: Arial, sans-serif;
     color: hsl(0% 0% 30%);
 }
 
-/* Container delle card con flexbox per allineamento automatico */
 .cardContainer {
     display: flex;
     flex-wrap: wrap;
@@ -44,27 +42,27 @@
 /* MEDIA QUERY: Stili per dispositivi con larghezza max di 768px (tablet o piccoli dispositivi) */
 @media (max-width: 768px) {
     .card {
-        width: 25%; /* La larghezza della card è adattata all'80% dello schermo su dispositivi piccoli */
-        max-width: none; /* Rimuoviamo il limite massimo di larghezza */
+        width: 25%; 
+        max-width: none;
     }
 
     .cardImage {
-        width: 60%; /* L'immagine si adatta un po' di più al contenuto */
+        width: 60%; 
     }
 }
 
 /* MEDIA QUERY: Stili per dispositivi con larghezza max di 480px (smartphone) */
 @media (max-width: 480px) {
     .card {
-        width: 25%; /* Su smartphone la card occupa il 100% della larghezza disponibile */
-        margin: 10px 10px 0 0; /* Aggiungiamo un margine verticale tra le card */
+        width: 25%; 
+        margin: 10px 10px 0 0;
     }
 
     .cardImage {
-        width: 60%; /* Immagini più grandi su schermi piccoli per una migliore visualizzazione */
+        width: 60%;
     }
 
     .cardTitle {
-        font-size: 1.2em; /* Leggermente più grande per migliorare la leggibilità su schermi piccoli */
+        font-size: 1.2em; 
     }
 }

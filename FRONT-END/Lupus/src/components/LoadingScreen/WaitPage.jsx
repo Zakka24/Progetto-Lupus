@@ -31,16 +31,15 @@ function WaitPage({ menuOpen, setMenuOpen }) {
     socket.on('session-started', (data) => {
       if (data.sessionID === sessionID) {
         console.log(`Sessione ${sessionID} avviata`);
-        setSessionStarted(true); // La sessione è iniziata, aggiorna lo stato
+        setSessionStarted(true);
         if (location.state.isAdmin === 'true') {
           socket.on('assegnazioni-admin', async (data) => {
-            console.log(data); // Log per vedere la struttura {prova1: 1, prova2: 2}
+            console.log(data);
 
             const rolesWithDetails = []; // Array per memorizzare i dettagli dei ruoli
 
             for (const [username, roleId] of Object.entries(data)) {
               try {
-                // Recupera i dettagli del ruolo tramite fetch
                 const response = await fetch('http://localhost:8080/api/roles/' + roleId);
                 const roleData = await response.json();
 
@@ -103,7 +102,7 @@ function WaitPage({ menuOpen, setMenuOpen }) {
       selectedRoles: selectedRoles, // Invia i ruoli selezionati
     };
 
-    socket.emit('start-session', sessionData); // Avvia la sessione inviando anche le altre informazioni
+    socket.emit('start-session', sessionData);
   };
 
   return (

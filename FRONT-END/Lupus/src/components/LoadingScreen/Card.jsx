@@ -1,7 +1,7 @@
 import styles from './Card.module.css';
 
 function Card({ items }) {
-  // Supporta sia la visualizzazione di un ruolo singolo (stringa) che di un array di ruoli
+
   const renderItems = Array.isArray(items) ? items : [items];
 
   const listRuoli = renderItems.map((item, index) => (
@@ -9,7 +9,7 @@ function Card({ items }) {
       <img
         alt="profile picture"
         className={styles.cardImage}
-        src={`/profilePics/${item.immagine}.jpeg`} // Percorso immagine
+        src={`/profilePics/${item.immagine}.jpeg`}
       />
       <h2 className={styles.cardTitle}>{item.nome}</h2>
       <p>{item.parte}</p>

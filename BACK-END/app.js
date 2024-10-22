@@ -19,7 +19,7 @@ app.use(express.json());
 
 // Configura CORS per consentire richieste da http://127.0.0.1:5173
 app.use(cors({
-  origin: 'http://127.0.0.1:5173', // Origine consentita
+  origin: 'https://progetto-lupus.vercel.app', // Origine consentita
   methods: ['GET', 'POST', 'PATCH', 'DELETE'], // Metodi HTTP consentiti
   credentials: true // Per gestire i cookie o altre credenziali
 }));
